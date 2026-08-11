@@ -1,21 +1,30 @@
-/* Find and fix every bug. Do not change the function name. */
 function generateLeaderboard(students) {
-    if (!Array.isArray(students)){
+    if (!Array.isArray(students) || students.length === 0) {
         return "Invalid";
     }
 
-    if (students.length === 0) {
-    return "Invalid";
+    for (const student of students) {
+        if (student.name === undefined || student.score === undefined) {
+            return "Invalid";
+        }
+
+        if (typeof student.score !== "number") {
+            return "Invalid";
+        }
     }
 
-    const qualified = students.filter(student => {
-        student.score >= 70;
-    });
+    const qualified = students.filter(student => student.score >= 70);
 
-    const names = qualified.map(({ name }) => {
-        name.toUpperCase();
-    });
+    const names = qualified.map(({ name }) => name.toUpperCase());
 
-    return names.slice(0, 2);
+    return names.slice(0, 3);
 }
+
+console.log(generateLeaderboard([{name:"Rafi",score:90},{name:"Sadia",score:65},{name:"Karim",score:85},{name:"Nafis",score:75}]));
+
+console.log(generateLeaderboard([{name:"A",score:70},{name:"B",score:71}]));
+console.log(generateLeaderboard([]));
+console.log(generateLeaderboard("students"));
+console.log(generateLeaderboard([{name:"Rafi"}]));
+console.log(generateLeaderboard([{name:"Rafi",score:"90"}]));
 
